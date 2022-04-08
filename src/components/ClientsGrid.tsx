@@ -14,7 +14,7 @@ export const ClientsGrid = (props: React.HTMLAttributes<HTMLDivElement>) => {
       {...props}
     >
       {numbers.map((number) => (
-        <Client number={number} />
+        <Client number={number} key={number} />
       ))}
     </div>
   );

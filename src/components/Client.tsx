@@ -11,9 +11,7 @@ type Props = {
 
 export const Client = observer(({ number }: Props) => {
   const store = useStore();
-  const client = computed(() =>
-    [...store.clients].find((client) => client.number === number),
-  ).get();
+  const client = store.getClient(number);
   console.log(client?.number);
 
   return (
@@ -23,8 +21,15 @@ export const Client = observer(({ number }: Props) => {
         border: 1px solid gray;
       `}
       onClick={() => {
-        if (client) return;
-        store.addClient({ number });
+        if (client) {
+          if (client.started) {
+            client.stop();
+            return;
+          }
+          client.start();
+          return;
+        }
+        store.addClient({ number, limit: 10 });
       }}
       onDoubleClick={() => {
         if (!client) return;
@@ -32,6 +37,7 @@ export const Client = observer(({ number }: Props) => {
       }}
     >
       {number}
+      {client?.counter}
     </ButtonBase>
   );
 });
