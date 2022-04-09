@@ -3,7 +3,7 @@ import { css } from '@emotion/react';
 import ButtonBase from '@mui/material/ButtonBase';
 import { observer } from 'mobx-react-lite';
 import { useStore } from './StoreProvider';
-import { computed } from 'mobx';
+import { formatTime } from '../utils/formatTime';
 
 type Props = {
   number: number;
@@ -36,8 +36,12 @@ export const Client = observer(({ number }: Props) => {
         store.removeClient(client);
       }}
     >
-      {number}
-      {client?.counter}
+      <div>
+        <div>{number}</div>
+        <div>time left: {formatTime(client?.counter)}</div>
+        <div>time start: {client?.startedAt?.toLocaleString()}</div>
+        <div>time end: {client?.timeEnd.toLocaleString()}</div>
+      </div>
     </ButtonBase>
   );
 });
