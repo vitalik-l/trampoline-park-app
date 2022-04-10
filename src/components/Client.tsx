@@ -12,7 +12,6 @@ type Props = {
 export const Client = observer(({ number }: Props) => {
   const store = useStore();
   const client = store.getClient(number);
-  console.log(client?.number);
 
   return (
     <ButtonBase
@@ -22,7 +21,7 @@ export const Client = observer(({ number }: Props) => {
       `}
       onClick={() => {
         if (client) {
-          if (client.started) {
+          if (client.isStarted) {
             client.stop();
             return;
           }
@@ -38,9 +37,10 @@ export const Client = observer(({ number }: Props) => {
     >
       <div>
         <div>{number}</div>
-        <div>time left: {formatTime(client?.counter)}</div>
-        <div>time start: {client?.startedAt?.toLocaleString()}</div>
+        <div>created at: {client?.createdAt?.toLocaleString()}</div>
+        <div>time start: {client?.timeStart?.toLocaleString()}</div>
         <div>time end: {client?.timeEnd.toLocaleString()}</div>
+        <div>time left: {formatTime(client?.timeLeft)}</div>
       </div>
     </ButtonBase>
   );

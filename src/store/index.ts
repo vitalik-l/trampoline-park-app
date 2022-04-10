@@ -1,36 +1,47 @@
-import { observable, makeAutoObservable, computed } from 'mobx';
+import { makeAutoObservable, computed } from 'mobx';
 
 type ClientConstructor = { number: number; limit: number };
 
 export class ClientStore {
   number: number;
   limit: number = 0;
-  counter: number = 0;
+  createdAt: Date;
   startedAt?: Date;
-  started: boolean = false;
+  stoppedAt?: Date;
   currentTime: CurrentTimeStore;
 
   constructor({ number, limit }: ClientConstructor, currentTime: CurrentTimeStore) {
     this.number = number;
     this.limit = limit;
-    this.counter = limit;
     this.currentTime = currentTime;
+    this.createdAt = new Date();
     makeAutoObservable(this);
   }
 
   get timeEnd() {
-    return new Date(+this.currentTime.value + this.counter * 1000);
+    return new Date(+(this.startedAt ?? this.currentTime.value) + this.limit * 1000);
+  }
+
+  get timeStart() {
+    return this.startedAt ?? this.currentTime.value;
+  }
+
+  get timeLeft() {
+    return Math.max(0, Math.round((+this.timeEnd - +this.currentTime.value) / 1000));
+  }
+
+  get isStarted() {
+    return !!this.startedAt;
   }
 
   start() {
-    if (!this.startedAt) {
-      this.startedAt = new Date();
-    }
-    this.started = true;
+    if (this.startedAt) return;
+    this.startedAt = new Date();
   }
 
   stop() {
-    this.started = false;
+    if (this.stoppedAt) return;
+    this.stoppedAt = new Date();
   }
 }
 
