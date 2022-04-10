@@ -37,10 +37,11 @@ export const Client = observer(({ number }: Props) => {
     >
       <div>
         <div>{number}</div>
-        <div>created at: {client?.createdAt?.toLocaleString()}</div>
         <div>time start: {client?.timeStart?.toLocaleString()}</div>
         <div>time end: {client?.timeEnd.toLocaleString()}</div>
-        <div>time left: {formatTime(client?.timeLeft)}</div>
+        <div>
+          time left: {formatTime(client?.timeLeft)} {client?.percentSpent}%
+        </div>
       </div>
     </ButtonBase>
   );

@@ -27,11 +27,18 @@ export class ClientStore {
   }
 
   get timeLeft() {
-    return Math.max(0, Math.round((+this.timeEnd - +this.currentTime.value) / 1000));
+    return Math.max(
+      0,
+      Math.min(this.limit, Math.round((+this.timeEnd - +this.currentTime.value) / 1000)),
+    );
   }
 
   get isStarted() {
     return !!this.startedAt;
+  }
+
+  get percentSpent() {
+    return 100 - (this.timeLeft * 100) / this.limit;
   }
 
   start() {
