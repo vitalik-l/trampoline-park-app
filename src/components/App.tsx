@@ -2,6 +2,7 @@ import React from 'react';
 import Button from '@mui/material/Button';
 import { ClientsGrid } from './ClientsGrid';
 import { css } from '@emotion/react';
+import { ClientDialog } from './ClientDialog';
 
 export const App = () => {
   return (
@@ -24,6 +25,7 @@ export const App = () => {
           flex: 1;
         `}
       />
+      <ClientDialog />
     </div>
   );
 };

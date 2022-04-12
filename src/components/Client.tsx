@@ -20,19 +20,7 @@ export const Client = observer(({ number }: Props) => {
         border: 1px solid gray;
       `}
       onClick={() => {
-        if (client) {
-          if (client.isStarted) {
-            client.stop();
-            return;
-          }
-          client.start();
-          return;
-        }
-        store.addClient({ number, limit: 10 });
-      }}
-      onDoubleClick={() => {
-        if (!client) return;
-        store.removeClient(client);
+        store.openClientDialog(number);
       }}
     >
       <div>
