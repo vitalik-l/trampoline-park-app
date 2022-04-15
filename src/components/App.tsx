@@ -1,10 +1,14 @@
 import React from 'react';
-import Button from '@mui/material/Button';
 import { ClientsGrid } from './ClientsGrid';
 import { css } from '@emotion/react';
 import { ClientDialog } from './ClientDialog';
+import { observer } from 'mobx-react-lite';
+import { useStore } from './StoreProvider';
+import Typography from '@mui/material/Typography';
 
-export const App = () => {
+export const App = observer(() => {
+  const store = useStore();
+
   return (
     <div
       css={css`
@@ -18,14 +22,24 @@ export const App = () => {
           min-height: 80px;
         `}
       >
-        <Button variant="contained">Button</Button>
+        <div
+          css={css`
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+          `}
+        >
+          <Typography variant="h4">{store.currentTime.value.toLocaleString()}</Typography>
+        </div>
       </div>
       <ClientsGrid
         css={css`
           flex: 1;
+          background: #f2f5f8;
         `}
       />
       <ClientDialog />
     </div>
   );
-};
+});
