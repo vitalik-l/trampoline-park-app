@@ -95,12 +95,12 @@ export const ClientDialog = observer(({ open }: { client?: ClientStore; open?: b
             <DialogActions>
               <Button onClick={onClose}>Закрыть</Button>
               {!!client && (
-                <Button variant="contained" color="error">
+                <Button variant="contained" color="error" onClick={() => client.stop()}>
                   Удалить
                 </Button>
               )}
               {!!client && (
-                <Button variant="contained" color="success">
+                <Button variant="contained" color="success" onClick={() => client.start()}>
                   Старт
                 </Button>
               )}
