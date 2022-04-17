@@ -47,7 +47,7 @@ export const ClientDialog = observer(({ open }: { client?: ClientStore; open?: b
   };
 
   return (
-    <Dialog open={open || number !== null} onClose={onClose}>
+    <Dialog open={open || number !== null}>
       <DialogTitle>Клиент</DialogTitle>
       <Form
         onSubmit={onSubmit}
@@ -95,12 +95,26 @@ export const ClientDialog = observer(({ open }: { client?: ClientStore; open?: b
             <DialogActions>
               <Button onClick={onClose}>Закрыть</Button>
               {!!client && (
-                <Button variant="contained" color="error" onClick={() => client.stop()}>
+                <Button
+                  variant="contained"
+                  color="error"
+                  onClick={() => {
+                    client.stop();
+                    onClose();
+                  }}
+                >
                   Удалить
                 </Button>
               )}
               {!!client && (
-                <Button variant="contained" color="success" onClick={() => client.start()}>
+                <Button
+                  variant="contained"
+                  color="success"
+                  onClick={() => {
+                    client.start();
+                    onClose();
+                  }}
+                >
                   Старт
                 </Button>
               )}

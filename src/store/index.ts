@@ -22,8 +22,12 @@ export class ClientStore {
     makeAutoObservable(this);
   }
 
+  get limitSeconds() {
+    return this.limit * 60;
+  }
+
   get timeEnd() {
-    return new Date(+(this.startedAt ?? this.currentTime.value) + this.limit * 1000);
+    return new Date(+(this.startedAt ?? this.currentTime.value) + this.limitSeconds * 1000);
   }
 
   get timeStart() {
@@ -33,7 +37,7 @@ export class ClientStore {
   get timeLeft() {
     return Math.max(
       0,
-      Math.min(this.limit, Math.round((+this.timeEnd - +this.currentTime.value) / 1000)),
+      Math.min(this.limitSeconds, Math.round((+this.timeEnd - +this.currentTime.value) / 1000)),
     );
   }
 
@@ -42,7 +46,7 @@ export class ClientStore {
   }
 
   get percentSpent() {
-    return 100 - (this.timeLeft * 100) / this.limit;
+    return 100 - (this.timeLeft * 100) / this.limitSeconds;
   }
 
   start() {

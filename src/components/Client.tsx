@@ -38,7 +38,7 @@ export const Client = observer(({ number }: Props) => {
             width: 100%;
             justify-content: center;
             ${client?.isStarted ? `background: ${green[500]};` : ''}
-            ${client?.name ? 'border-bottom: 1px solid #a0a2a452;' : ''}
+            ${client?.name ? 'border-bottom: 1px solid #ffffff94;' : ''}
           `}
         >
           <Typography variant="h6">{client?.name}</Typography>
