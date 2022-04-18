@@ -12,6 +12,15 @@ type Props = {
   number: number;
 };
 
+const endAnimation = keyframes`
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+`;
+
 export const Client = observer(({ number }: Props) => {
   const store = useStore();
   const client = store.getClient(number);
@@ -109,30 +118,34 @@ export const Client = observer(({ number }: Props) => {
             </div>
           </div>
           {client?.isStarted && (
-            <div
-              css={css`
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background: ${green[500]};
-              `}
-            />
-          )}
-          {client?.isStarted && (
-            <div
-              css={css`
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background: ${red[500]};
-                transition: transform 0.5s;
-              `}
-              style={{ transform: `translateY(-${100 - client.percentSpent}%)` }}
-            />
+            <>
+              <div
+                css={css`
+                  position: absolute;
+                  top: 0;
+                  left: 0;
+                  width: 100%;
+                  height: 100%;
+                  background: ${green[500]};
+                `}
+              />
+              <div
+                css={css`
+                  position: absolute;
+                  top: 0;
+                  left: 0;
+                  width: 100%;
+                  height: 100%;
+                  background: ${red[500]};
+                  transition: transform 0.5s;
+                  animation: 0.5s ${client?.isFinished ? endAnimation : ''} 1s ease-in-out infinite
+                    alternate;
+                `}
+                style={
+                  !client?.isFinished ? { transform: `translateY(-${100 - client.progress}%)` } : {}
+                }
+              />
+            </>
           )}
         </div>
       </ButtonBase>

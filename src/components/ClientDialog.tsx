@@ -31,7 +31,8 @@ export const ClientDialog = observer(({ open }: { client?: ClientStore; open?: b
     minutes?: string;
     comment?: string;
   }) => {
-    const limit = +(values?.hours ?? 0) * 60 + +(values?.minutes ?? 0);
+    // const limit = +(values?.hours ?? 0) * 60 + +(values?.minutes ?? 0);
+    const limit = 0.1;
     const params = {
       number: +values.number,
       limit,

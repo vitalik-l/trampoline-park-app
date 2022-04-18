@@ -45,7 +45,11 @@ export class ClientStore {
     return !!this.startedAt;
   }
 
-  get percentSpent() {
+  get isFinished() {
+    return this.progress >= 100;
+  }
+
+  get progress() {
     return 100 - (this.timeLeft * 100) / this.limitSeconds;
   }
 
