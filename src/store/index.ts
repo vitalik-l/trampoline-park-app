@@ -103,6 +103,7 @@ export class Store {
   }
 
   removeClient(client: ClientStore) {
+    client.stop();
     this.clients.delete(client);
   }
 
@@ -117,7 +118,7 @@ export class Store {
     }
     const numbers = [...this.clients].map((client) => client.number).sort((a, b) => a - b);
     const nextNumberIndex = numbers.findIndex((el, index, arr) => arr[index + 1] !== el + 1);
-    return numbers[nextNumberIndex] + 1;
+    this.clientNumberDialog = nextNumberIndex === -1 ? 1 : numbers[nextNumberIndex] + 1;
   }
 
   closeClientDialog() {

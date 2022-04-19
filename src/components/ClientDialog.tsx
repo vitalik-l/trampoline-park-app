@@ -16,26 +16,12 @@ export const ClientDialog = observer(({ open }: { client?: ClientStore; open?: b
   const number = store.clientNumberDialog;
   const client = number ? store.getClient(number) : undefined;
 
-  const timeLimit = React.useMemo(() => {
-    const hours = Math.floor((client?.limit ?? 60) / 60);
-    const minutes = (client?.limit ?? 0) % 60;
-    return { hours, minutes };
-  }, [client]);
-
   const onClose = () => store.closeClientDialog();
 
-  const onSubmit = (values: {
-    name: string;
-    number: string;
-    hours?: string;
-    minutes?: string;
-    comment?: string;
-  }) => {
-    // const limit = +(values?.hours ?? 0) * 60 + +(values?.minutes ?? 0);
-    const limit = 0.1;
+  const onSubmit = (values: { name: string; number: string; limit: string; comment?: string }) => {
     const params = {
       number: +values.number,
-      limit,
+      limit: +values.limit,
       comment: values.comment,
       name: values.name,
     };
@@ -49,14 +35,57 @@ export const ClientDialog = observer(({ open }: { client?: ClientStore; open?: b
 
   return (
     <Dialog open={open || number !== null}>
-      <DialogTitle>Клиент</DialogTitle>
+      <DialogTitle>
+        <div
+          css={css`
+            display: flex;
+            justify-content: space-between;
+            width: 600px;
+            max-width: 100%;
+          `}
+        >
+          <div>Клиент</div>
+          <div
+            css={css`
+              display: flex;
+              grid-gap: 1rem;
+            `}
+          >
+            {!!client && (
+              <>
+                <Button
+                  variant="contained"
+                  color="error"
+                  onClick={() => {
+                    store.removeClient(client);
+                    onClose();
+                  }}
+                >
+                  Удалить
+                </Button>
+                {!client.isStarted && (
+                  <Button
+                    variant="contained"
+                    color="success"
+                    onClick={() => {
+                      client.start();
+                      onClose();
+                    }}
+                  >
+                    Старт
+                  </Button>
+                )}
+              </>
+            )}
+          </div>
+        </div>
+      </DialogTitle>
       <Form
         onSubmit={onSubmit}
         initialValues={{
           number,
           name: client?.name,
-          hours: timeLimit.hours,
-          minutes: timeLimit.minutes,
+          limit: client?.limit ?? 60,
           comment: client?.comment,
         }}
         render={({ handleSubmit }) => (
@@ -71,54 +100,17 @@ export const ClientDialog = observer(({ open }: { client?: ClientStore; open?: b
               >
                 <TextField name="number" label="Номер" required />
                 <TextField name="name" label="Имя" required />
-                <div
-                  css={css`
-                    display: flex;
-                    grid-gap: 1rem;
-                  `}
-                >
-                  <TextField
-                    name="hours"
-                    label="Часов"
-                    inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
-                    type="number"
-                  />
-                  <TextField
-                    name="minutes"
-                    label="Минут"
-                    inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
-                    type="number"
-                  />
-                </div>
+                <TextField
+                  name="limit"
+                  label="Минут"
+                  inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
+                  type="number"
+                />
                 <TextField name="comment" label="Комментарий" multiline rows={3} />
               </div>
             </DialogContent>
             <DialogActions>
               <Button onClick={onClose}>Закрыть</Button>
-              {!!client && (
-                <Button
-                  variant="contained"
-                  color="error"
-                  onClick={() => {
-                    client.stop();
-                    onClose();
-                  }}
-                >
-                  Удалить
-                </Button>
-              )}
-              {!!client && (
-                <Button
-                  variant="contained"
-                  color="success"
-                  onClick={() => {
-                    client.start();
-                    onClose();
-                  }}
-                >
-                  Старт
-                </Button>
-              )}
               <Button type="submit" variant="contained" color="primary">
                 Сохранить
               </Button>
