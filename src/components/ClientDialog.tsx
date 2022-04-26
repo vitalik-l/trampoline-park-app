@@ -14,7 +14,7 @@ import { css } from '@emotion/react';
 export const ClientDialog = observer(({ open }: { client?: ClientStore; open?: boolean }) => {
   const store = useStore();
   const number = store.clientNumberDialog;
-  const client = number ? store.getClient(number) : undefined;
+  const client = number ? store.clients.get(number) : undefined;
 
   const onClose = () => store.closeClientDialog();
 
@@ -26,7 +26,7 @@ export const ClientDialog = observer(({ open }: { client?: ClientStore; open?: b
       name: values.name,
     };
     if (!client) {
-      store.addClient(params);
+      store.clients.add(params);
     } else {
       client.save(params);
     }
@@ -57,7 +57,7 @@ export const ClientDialog = observer(({ open }: { client?: ClientStore; open?: b
                   variant="contained"
                   color="error"
                   onClick={() => {
-                    store.removeClient(client);
+                    store.clients.remove(client);
                     onClose();
                   }}
                 >

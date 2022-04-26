@@ -1,8 +1,19 @@
 import { makeAutoObservable, computed } from 'mobx';
+import { db } from '../api/dexie';
 
-type ClientConstructor = { number: number; limit: number; name: string; comment?: string };
+type ClientConstructor = {
+  id?: number;
+  number: number;
+  limit: number;
+  name: string;
+  comment?: string;
+  startedAt?: Date;
+  stoppedAt?: Date;
+  createdAt?: Date;
+};
 
 export class ClientStore {
+  id?: number;
   number: number;
   limit: number = 0;
   createdAt: Date;
@@ -12,14 +23,21 @@ export class ClientStore {
   name: string;
   comment?: string;
 
-  constructor({ number, limit, name, comment }: ClientConstructor, currentTime: CurrentTimeStore) {
+  constructor(
+    { id, number, limit, name, comment, startedAt, stoppedAt, createdAt }: ClientConstructor,
+    currentTime: CurrentTimeStore,
+  ) {
+    makeAutoObservable(this);
+    this.id = id;
     this.number = number;
     this.limit = limit;
     this.currentTime = currentTime;
-    this.createdAt = new Date();
+    this.createdAt = createdAt ?? new Date();
+    this.stoppedAt = stoppedAt;
+    this.startedAt = startedAt;
     this.name = name;
     this.comment = comment;
-    makeAutoObservable(this);
+    this.saveToStorage();
   }
 
   get limitSeconds() {
@@ -53,14 +71,20 @@ export class ClientStore {
     return 100 - (this.timeLeft * 100) / this.limitSeconds;
   }
 
+  setId(value: number) {
+    this.id = value;
+  }
+
   start() {
     if (this.startedAt) return;
     this.startedAt = new Date();
+    this.saveToStorage();
   }
 
   stop() {
     if (this.stoppedAt) return;
     this.stoppedAt = new Date();
+    this.saveToStorage();
   }
 
   save(params: Partial<ClientConstructor>) {
@@ -71,6 +95,24 @@ export class ClientStore {
     if (params.limit) {
       this.limit = params.limit;
     }
+    this.saveToStorage();
+  }
+
+  async saveToStorage() {
+    if (!this.id) {
+      const id = await db.clients.add(this);
+      this.setId(id);
+      return;
+    }
+    db.clients.update(this.id, {
+      number: this.number,
+      createdAt: this.createdAt,
+      limit: this.limit,
+      comment: this.comment,
+      name: this.name,
+      startedAt: this.startedAt,
+      stoppedAt: this.stoppedAt,
+    });
   }
 }
 
@@ -89,26 +131,50 @@ class CurrentTimeStore {
   }
 }
 
+class ClientsStore {
+  isLoading: boolean = true;
+  data: Set<ClientStore> = new Set();
+  currentTime: CurrentTimeStore;
+
+  constructor({ currentTime }: { currentTime: CurrentTimeStore }) {
+    this.currentTime = currentTime;
+    makeAutoObservable(this);
+  }
+
+  async fetchData() {
+    this.setIsLoading(true);
+    const clients = await db.clients.filter((client) => !client.stoppedAt).toArray();
+    clients.forEach((client) => this.add(client));
+    this.setIsLoading(false);
+  }
+
+  setIsLoading(state: boolean) {
+    this.isLoading = state;
+  }
+
+  add(params: ClientConstructor) {
+    this.data.add(new ClientStore(params, this.currentTime));
+  }
+
+  remove(client: ClientStore) {
+    client.stop();
+    this.data.delete(client);
+  }
+
+  get(number: number) {
+    return computed(() => [...this.data].find((client) => client.number === number)).get();
+  }
+}
+
 export class Store {
-  clients: Set<ClientStore> = new Set();
+  clients: ClientsStore;
   currentTime: CurrentTimeStore = new CurrentTimeStore();
   clientNumberDialog: null | number = null;
 
   constructor() {
     makeAutoObservable(this);
-  }
-
-  addClient(params: ClientConstructor) {
-    this.clients.add(new ClientStore(params, this.currentTime));
-  }
-
-  removeClient(client: ClientStore) {
-    client.stop();
-    this.clients.delete(client);
-  }
-
-  getClient(number: number) {
-    return computed(() => [...this.clients].find((client) => client.number === number)).get();
+    this.clients = new ClientsStore({ currentTime: this.currentTime });
+    this.clients.fetchData().catch(console.error);
   }
 
   openClientDialog(number?: number) {
@@ -116,7 +182,7 @@ export class Store {
       this.clientNumberDialog = number;
       return;
     }
-    const numbers = [...this.clients].map((client) => client.number).sort((a, b) => a - b);
+    const numbers = [...this.clients.data].map((client) => client.number).sort((a, b) => a - b);
     const nextNumberIndex = numbers.findIndex((el, index, arr) => arr[index + 1] !== el + 1);
     this.clientNumberDialog = nextNumberIndex === -1 ? 1 : numbers[nextNumberIndex] + 1;
   }

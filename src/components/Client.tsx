@@ -23,7 +23,7 @@ const endAnimation = keyframes`
 
 export const Client = observer(({ number }: Props) => {
   const store = useStore();
-  const client = store.getClient(number);
+  const client = store.clients.get(number);
 
   return (
     <Paper>
