@@ -198,7 +198,7 @@ const useQuery = (queryFn: () => PromiseLike<any>) => {
   return query;
 };
 
-export const HistoryDialog = observer((props: React.ComponentProps<typeof Dialog>) => {
+export const HistoryDialog = observer(() => {
   const store = useStore();
   const open = store.isHistoryOpen;
   const query = useQuery(() => db.clients.toArray());
