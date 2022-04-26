@@ -6,6 +6,8 @@ import { useStore } from './StoreProvider';
 import { formatTime } from '../utils/formatTime';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
 import { green, red } from '@mui/material/colors';
 
 type Props = {
@@ -20,6 +22,15 @@ const endAnimation = keyframes`
     opacity: 1;
   }
 `;
+
+const ContextMenu = (props: React.ComponentProps<typeof Menu>) => {
+  return (
+    <Menu anchorReference="anchorPosition" {...props}>
+      <MenuItem>Старт</MenuItem>
+      <MenuItem>Удалить</MenuItem>
+    </Menu>
+  );
+};
 
 export const Client = observer(({ number }: Props) => {
   const store = useStore();
