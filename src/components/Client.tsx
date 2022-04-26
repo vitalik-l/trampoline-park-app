@@ -23,21 +23,62 @@ const endAnimation = keyframes`
   }
 `;
 
-const ContextMenu = (props: React.ComponentProps<typeof Menu>) => {
-  return (
-    <Menu anchorReference="anchorPosition" {...props}>
-      <MenuItem>Старт</MenuItem>
-      <MenuItem>Удалить</MenuItem>
-    </Menu>
-  );
-};
-
 export const Client = observer(({ number }: Props) => {
   const store = useStore();
   const client = store.clients.get(number);
+  const [contextMenu, setContextMenu] = React.useState<{
+    mouseX: number;
+    mouseY: number;
+  } | null>(null);
+
+  const handleContextMenu = (event: React.MouseEvent) => {
+    event.preventDefault();
+    if (!client) return;
+    setContextMenu(
+      contextMenu === null
+        ? {
+            mouseX: event.clientX - 2,
+            mouseY: event.clientY - 4,
+          }
+        : null,
+    );
+  };
+
+  const handleContextMenuClose = () => {
+    setContextMenu(null);
+  };
 
   return (
-    <Paper>
+    <Paper onContextMenu={handleContextMenu}>
+      <Menu
+        anchorReference="anchorPosition"
+        open={contextMenu !== null}
+        onClose={handleContextMenuClose}
+        anchorPosition={
+          contextMenu !== null ? { top: contextMenu.mouseY, left: contextMenu.mouseX } : undefined
+        }
+      >
+        {!client?.isStarted && (
+          <MenuItem
+            onClick={() => {
+              client?.start();
+              handleContextMenuClose();
+            }}
+          >
+            Старт
+          </MenuItem>
+        )}
+        <MenuItem
+          onClick={() => {
+            if (client) {
+              store.clients.remove(client);
+              handleContextMenuClose();
+            }
+          }}
+        >
+          Удалить
+        </MenuItem>
+      </Menu>
       <ButtonBase
         css={css`
           width: 100%;
