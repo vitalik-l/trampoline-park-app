@@ -190,6 +190,10 @@ export class Store {
       return;
     }
     const numbers = [...this.clients.data].map((client) => client.number).sort((a, b) => a - b);
+    if (numbers[0] > 1) {
+      this.clientNumberDialog = 1;
+      return;
+    }
     const nextNumberIndex = numbers.findIndex((el, index, arr) => arr[index + 1] !== el + 1);
     this.clientNumberDialog = nextNumberIndex === -1 ? 1 : numbers[nextNumberIndex] + 1;
   }
