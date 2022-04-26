@@ -83,8 +83,10 @@ export class ClientStore {
 
   stop() {
     if (this.stoppedAt) return;
-    this.stoppedAt = new Date();
-    this.saveToStorage();
+    if (confirm('Удалить запись?')) {
+      this.stoppedAt = new Date();
+      this.saveToStorage().catch(console.error);
+    }
   }
 
   save(params: Partial<ClientConstructor>) {
@@ -141,6 +143,10 @@ class ClientsStore {
     makeAutoObservable(this);
   }
 
+  get dataArray() {
+    return [...this.data];
+  }
+
   async fetchData() {
     this.setIsLoading(true);
     const clients = await db.clients.filter((client) => !client.stoppedAt).toArray();
@@ -162,7 +168,7 @@ class ClientsStore {
   }
 
   get(number: number) {
-    return computed(() => [...this.data].find((client) => client.number === number)).get();
+    return computed(() => this.dataArray.find((client) => client.number === number)).get();
   }
 }
 
@@ -170,6 +176,7 @@ export class Store {
   clients: ClientsStore;
   currentTime: CurrentTimeStore = new CurrentTimeStore();
   clientNumberDialog: null | number = null;
+  isHistoryOpen: boolean = false;
 
   constructor() {
     makeAutoObservable(this);
@@ -189,5 +196,9 @@ export class Store {
 
   closeClientDialog() {
     this.clientNumberDialog = null;
+  }
+
+  setOpenHistory(value: boolean) {
+    this.isHistoryOpen = value;
   }
 }

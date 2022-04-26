@@ -5,8 +5,10 @@ import { ClientDialog } from './ClientDialog';
 import { observer } from 'mobx-react-lite';
 import { useStore } from './StoreProvider';
 import Typography from '@mui/material/Typography';
-import { IconButton } from '@mui/material';
-import { AddCircleOutlined, Login, ListAlt } from '@mui/icons-material';
+import IconButton from '@mui/material/IconButton';
+import AddCircleOutlined from '@mui/icons-material/AddCircleOutlined';
+import ListAlt from '@mui/icons-material/ListAlt';
+import { HistoryDialog } from './HistoryDialog';
 
 export const App = observer(() => {
   const store = useStore();
@@ -22,6 +24,14 @@ export const App = observer(() => {
       <div
         css={css`
           min-height: 80px;
+          position: sticky;
+          top: 0;
+          left: 0;
+          width: 100%;
+          background: white;
+          z-index: 3;
+          box-shadow: 0 2px 1px -1px rgb(0 0 0 / 0%), 0px 1px 1px 0px rgb(0 0 0 / 0%),
+            0px 1px 3px 0px rgb(0 0 0 / 12%);
         `}
       >
         <div
@@ -46,14 +56,11 @@ export const App = observer(() => {
               justify-content: flex-end;
             `}
           >
-            <IconButton>
+            <IconButton onClick={() => store.setOpenHistory(true)}>
               <ListAlt />
             </IconButton>
             <IconButton onClick={() => store.openClientDialog()}>
               <AddCircleOutlined />
-            </IconButton>
-            <IconButton>
-              <Login />
             </IconButton>
           </div>
         </div>
@@ -65,6 +72,7 @@ export const App = observer(() => {
         `}
       />
       <ClientDialog />
+      <HistoryDialog />
     </div>
   );
 });
