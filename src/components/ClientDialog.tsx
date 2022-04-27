@@ -26,6 +26,10 @@ export const ClientDialog = observer(({ open }: { client?: ClientStore; open?: b
       name: values.name,
     };
     if (!client) {
+      if (store.clients.get(params.number)) {
+        alert('Номер занят');
+        return;
+      }
       store.clients.add(params);
     } else {
       client.save(params);

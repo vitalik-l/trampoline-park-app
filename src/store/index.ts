@@ -159,6 +159,10 @@ class ClientsStore {
   }
 
   add(params: ClientConstructor) {
+    if (this.get(params.number)) {
+      alert('Номер занят');
+      return;
+    }
     this.data.add(new ClientStore(params, this.currentTime));
   }
 
