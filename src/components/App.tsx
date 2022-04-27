@@ -48,12 +48,15 @@ export const App = observer(() => {
               flex: 1;
             `}
           />
-          <Typography variant="h4">{store.currentTime.value.toLocaleString()}</Typography>
+          <Typography sx={{ typography: { sm: 'h4', xs: 'h5' } }}>
+            {store.currentTime.value.toLocaleString()}
+          </Typography>
           <div
             css={css`
               flex: 1;
               display: flex;
               justify-content: flex-end;
+              margin-left: 1rem;
             `}
           >
             <IconButton onClick={() => store.setOpenHistory(true)}>
@@ -69,6 +72,7 @@ export const App = observer(() => {
         css={css`
           flex: 1;
           background: #f2f5f8;
+          overflow: auto;
         `}
       />
       <ClientDialog />
