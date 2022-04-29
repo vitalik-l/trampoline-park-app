@@ -20,7 +20,7 @@ class ClientsStore {
   async fetchData() {
     this.setIsLoading(true);
     const clients = await db.clients.filter((client) => !client.stoppedAt).toArray();
-    clients.forEach((client) => this.add(client));
+    clients.forEach((client) => this.data.add(new ClientStore(client, this.currentTime)));
     this.setIsLoading(false);
   }
 

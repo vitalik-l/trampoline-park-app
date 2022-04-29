@@ -186,15 +186,17 @@ export const Client = observer(({ number }: Props) => {
                 align-items: center;
                 flex: 1;
                 width: 100%;
-                padding: 10px 0;
+                padding-top: 10px;
               `}
             >
               <div
                 css={css`
-                  width: 50px;
+                  width: 65px;
                 `}
               >
-                <Typography variant="h4">{number}</Typography>
+                <Typography variant="h4" style={{ fontSize: '2.8rem' }}>
+                  {number}
+                </Typography>
               </div>
               <div
                 css={css`
@@ -207,7 +209,10 @@ export const Client = observer(({ number }: Props) => {
                 <div
                   css={css`
                     font-weight: 400;
-                    font-size: 1.2rem;
+                    font-size: 1.3rem;
+                    display: flex;
+                    flex-direction: column;
+                    grid-gap: 0.2rem;
                   `}
                 >
                   <div>{client?.timeStart?.toLocaleTimeString()}</div>
@@ -224,7 +229,9 @@ export const Client = observer(({ number }: Props) => {
                 justify-content: center;
               `}
             >
-              <Typography variant="h5">{client ? formatTime(client?.timeLeft) : ''}</Typography>
+              <Typography variant="h5" style={{ fontSize: '1.8rem' }}>
+                {client ? formatTime(client?.timeLeft) : ''}
+              </Typography>
             </div>
           </div>
           {client?.isStarted && !client?.isPaused && (
