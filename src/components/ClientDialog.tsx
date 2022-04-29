@@ -1,7 +1,7 @@
 import React from 'react';
 import DialogTitle from '@mui/material/DialogTitle';
 import Dialog from '@mui/material/Dialog';
-import { ClientStore } from '../store';
+import { ClientStore } from '../store/ClientStore';
 import { Form } from 'react-final-form';
 import { observer } from 'mobx-react-lite';
 import { useStore } from './StoreProvider';
