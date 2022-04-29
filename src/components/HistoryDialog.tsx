@@ -186,7 +186,7 @@ const COLUMNS: GridColDef[] = [
     headerName: 'Паузы',
     renderCell: ({ value }) => (
       <div style={{ padding: '0.5rem 0' }}>
-        {value.map((pause: Pause, index: number) => (
+        {value?.map((pause: Pause, index: number) => (
           <div key={index}>
             {!!pause?.dateFrom && `с ${new Date(pause?.dateFrom).toLocaleTimeString()}`}
             {!!pause?.dateTo && ` до ${new Date(pause?.dateTo).toLocaleTimeString()}`}
