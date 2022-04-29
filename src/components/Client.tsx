@@ -16,14 +16,16 @@ type Props = {
   number: number;
 };
 
+const COLORS = {
+  green: '#34ff3c',
+};
+
 const endAnimation = keyframes`
   from {
-    //opacity: 0;
     background: white;
   }
   to {
     background: ${red[500]};
-    //opacity: 1;
   }
 `;
 
@@ -45,7 +47,7 @@ const ContentBgBase = styled.div`
 `;
 
 const ContentBg = styled(ContentBgBase)`
-  background: ${green[500]};
+  background: ${COLORS.green};
 `;
 
 const ContentBgProgress = styled(ContentBgBase)`
@@ -61,9 +63,8 @@ const stateStyles: { [key in ClientState]?: ReturnType<typeof css> } = {
     background: orange;
   `,
   [ClientState.IN_PROGRESS]: css`
-    color: white;
     ${Header} {
-      background: ${green[500]};
+      background: ${COLORS.green};
     }
   `,
   [ClientState.FINISHED]: css`
@@ -187,6 +188,8 @@ export const Client = observer(({ number }: Props) => {
                 flex: 1;
                 width: 100%;
                 padding-top: 10px;
+                padding-right: 0.5rem;
+                box-sizing: border-box;
               `}
             >
               <div

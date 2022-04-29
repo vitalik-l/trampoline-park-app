@@ -10,6 +10,7 @@ import Button from '@mui/material/Button';
 import DialogContent from '@mui/material/DialogContent';
 import { TextField } from 'mui-rff';
 import { css } from '@emotion/react';
+import { experimental_sx as sx } from '@mui/material/styles';
 
 export const ClientDialog = observer(({ open }: { client?: ClientStore; open?: boolean }) => {
   const store = useStore();
@@ -114,15 +115,32 @@ export const ClientDialog = observer(({ open }: { client?: ClientStore; open?: b
                   flex-direction: column;
                 `}
               >
-                <TextField name="number" label="Номер" required />
-                <TextField name="name" label="Имя" required />
+                <TextField
+                  name="number"
+                  label="Номер"
+                  required
+                  InputProps={{ style: { fontSize: '1.3rem' } }}
+                />
+                <TextField
+                  name="name"
+                  label="Имя"
+                  required
+                  InputProps={{ style: { fontSize: '1.3rem' } }}
+                />
                 <TextField
                   name="limit"
                   label="Минут"
                   inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
                   type="number"
+                  InputProps={{ style: { fontSize: '1.3rem' } }}
                 />
-                <TextField name="comment" label="Комментарий" multiline rows={3} />
+                <TextField
+                  name="comment"
+                  label="Комментарий"
+                  multiline
+                  rows={3}
+                  InputProps={{ style: { fontSize: '1.3rem' } }}
+                />
               </div>
             </DialogContent>
             <DialogActions>
