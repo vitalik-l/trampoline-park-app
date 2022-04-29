@@ -184,6 +184,7 @@ const COLUMNS: GridColDef[] = [
   {
     field: 'pauses',
     headerName: 'Паузы',
+    minWidth: 200,
     renderCell: ({ value }) => (
       <div style={{ padding: '0.5rem 0' }}>
         {value?.map((pause: Pause, index: number) => (

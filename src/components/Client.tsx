@@ -17,7 +17,7 @@ type Props = {
 };
 
 const COLORS = {
-  green: '#34ff3c',
+  green: '#18df21',
 };
 
 const endAnimation = keyframes`
