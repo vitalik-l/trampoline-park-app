@@ -9,6 +9,8 @@ import Typography from '@mui/material/Typography';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { green, red } from '@mui/material/colors';
+import styled from '@emotion/styled';
+import { ClientState } from '../store/ClientStore';
 
 type Props = {
   number: number;
@@ -16,11 +18,69 @@ type Props = {
 
 const endAnimation = keyframes`
   from {
-    opacity: 0;
+    //opacity: 0;
+    background: white;
   }
   to {
-    opacity: 1;
+    background: ${red[500]};
+    //opacity: 1;
   }
+`;
+
+const Header = styled.div`
+  height: 35px;
+  display: flex;
+  align-items: center;
+  padding: 5px 0;
+  width: 100%;
+  justify-content: center;
+`;
+
+const ContentBgBase = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+`;
+
+const ContentBg = styled(ContentBgBase)`
+  background: ${green[500]};
+`;
+
+const ContentBgProgress = styled(ContentBgBase)`
+  background: ${red[500]};
+  transition: transform 0.5s;
+`;
+
+const stateStyles: { [key in ClientState]?: ReturnType<typeof css> } = {
+  [ClientState.CREATED]: css`
+    background: yellow;
+  `,
+  [ClientState.PAUSED]: css`
+    background: orange;
+  `,
+  [ClientState.IN_PROGRESS]: css`
+    color: white;
+    ${Header} {
+      background: ${green[500]};
+    }
+  `,
+  [ClientState.FINISHED]: css`
+    animation: 0.5s ${endAnimation} ease-in-out infinite alternate;
+
+    ${ContentBg}, ${ContentBgProgress} {
+      background: none;
+    }
+  `,
+};
+
+const Root = styled(ButtonBase)<{ state?: ClientState }>`
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
+  text-shadow: 1px 1px 1px #565656;
+  ${({ state }) => (state !== undefined ? stateStyles[state] : null)}
 `;
 
 export const Client = observer(({ number }: Props) => {
@@ -68,6 +128,16 @@ export const Client = observer(({ number }: Props) => {
             Старт
           </MenuItem>
         )}
+        {client?.isStarted && (
+          <MenuItem
+            onClick={() => {
+              client?.togglePause();
+              handleContextMenuClose();
+            }}
+          >
+            {client?.isPaused ? 'Старт' : 'Пауза'}
+          </MenuItem>
+        )}
         <MenuItem
           onClick={() => {
             if (client) {
@@ -79,31 +149,19 @@ export const Client = observer(({ number }: Props) => {
           Удалить
         </MenuItem>
       </Menu>
-      <ButtonBase
-        css={css`
-          width: 100%;
-          height: 100%;
-          flex-direction: column;
-          ${client?.isStarted ? 'color: white;' : ''}
-        `}
+      <Root
+        state={client?.state}
         onClick={() => {
           store.openClientDialog(number);
         }}
       >
-        <div
+        <Header
           css={css`
-            height: 35px;
-            display: flex;
-            align-items: center;
-            padding: 5px 0;
-            width: 100%;
-            justify-content: center;
-            ${client?.isStarted ? `background: ${green[500]};` : ''}
-            ${client?.name ? 'border-bottom: 1px solid #ffffff94;' : ''}
+            ${!!client?.name ? 'border-bottom: 1px solid #ffffff94;' : ''}
           `}
         >
           <Typography variant="h6">{client?.name}</Typography>
-        </div>
+        </Header>
         <div
           css={css`
             flex: 1;
@@ -169,30 +227,10 @@ export const Client = observer(({ number }: Props) => {
               <Typography variant="h5">{client ? formatTime(client?.timeLeft) : ''}</Typography>
             </div>
           </div>
-          {client?.isStarted && (
+          {client?.isStarted && !client?.isPaused && (
             <>
-              <div
-                css={css`
-                  position: absolute;
-                  top: 0;
-                  left: 0;
-                  width: 100%;
-                  height: 100%;
-                  background: ${green[500]};
-                `}
-              />
-              <div
-                css={css`
-                  position: absolute;
-                  top: 0;
-                  left: 0;
-                  width: 100%;
-                  height: 100%;
-                  background: ${red[500]};
-                  transition: transform 0.5s;
-                  animation: 0.5s ${client?.isFinished ? endAnimation : ''} 1s ease-in-out infinite
-                    alternate;
-                `}
+              <ContentBg />
+              <ContentBgProgress
                 style={
                   !client?.isFinished ? { transform: `translateY(-${100 - client.progress}%)` } : {}
                 }
@@ -200,7 +238,7 @@ export const Client = observer(({ number }: Props) => {
             </>
           )}
         </div>
-      </ButtonBase>
+      </Root>
     </Paper>
   );
 });
