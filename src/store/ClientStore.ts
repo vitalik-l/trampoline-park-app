@@ -21,7 +21,9 @@ export type ClientConstructor = {
   pauses?: Pauses;
 };
 
-type Pauses = { dateFrom?: Date; dateTo?: Date }[];
+export type Pause = { dateFrom?: Date; dateTo?: Date };
+
+type Pauses = Pause[];
 
 export class ClientStore {
   id?: number;
@@ -126,9 +128,10 @@ export class ClientStore {
     const lastPause = this.pauses[this.pauses.length - 1];
     if (!lastPause || lastPause?.dateTo) {
       this.pauses.push({ dateFrom: new Date() });
-      return;
+    } else {
+      lastPause.dateTo = new Date();
     }
-    lastPause.dateTo = new Date();
+    this.saveToStorage();
   }
 
   start() {

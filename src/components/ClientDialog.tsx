@@ -79,6 +79,18 @@ export const ClientDialog = observer(({ open }: { client?: ClientStore; open?: b
                     Старт
                   </Button>
                 )}
+                {client?.isStarted && (
+                  <Button
+                    variant="contained"
+                    color="success"
+                    onClick={() => {
+                      client?.togglePause();
+                      onClose();
+                    }}
+                  >
+                    {client?.isPaused ? 'Старт' : 'Пауза'}
+                  </Button>
+                )}
               </>
             )}
           </div>

@@ -17,6 +17,29 @@ import { css } from '@emotion/react';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Popper from '@mui/material/Popper';
+import { Pause } from '../store/ClientStore';
+import { withStyles } from '@mui/styles';
+
+const StyledDataGrid = (withStyles as any)({
+  root: {
+    '& .MuiDataGrid-renderingZone': {
+      maxHeight: 'none !important',
+    },
+    '& .MuiDataGrid-cell': {
+      lineHeight: 'unset !important',
+      maxHeight: 'none !important',
+      whiteSpace: 'normal',
+      wordWrap: 'break-word',
+    },
+    '& .MuiDataGrid-row': {
+      maxHeight: 'none !important',
+    },
+  },
+  virtualScrollerContent: {
+    height: '100% !important',
+    overflow: 'scroll',
+  },
+})(DataGrid);
 
 interface GridCellExpandProps {
   value: string;
@@ -103,8 +126,15 @@ const GridCellExpand = React.memo(function GridCellExpand(props: GridCellExpandP
           anchorEl={anchorEl}
           style={{ width, zIndex: 99999 }}
         >
-          <Paper elevation={1} style={{ minHeight: wrapper.current!.offsetHeight - 3 }}>
-            <Typography variant="body2" style={{ padding: 8 }}>
+          <Paper
+            elevation={1}
+            style={{
+              minHeight: wrapper.current!.offsetHeight - 3,
+              maxHeight: '300px',
+              overflow: 'auto',
+            }}
+          >
+            <Typography variant="body2" style={{ padding: 8, wordBreak: 'break-word' }}>
               {value}
             </Typography>
           </Paper>
@@ -149,6 +179,21 @@ const COLUMNS: GridColDef[] = [
     field: 'startedAt',
     headerName: 'Старт',
     valueFormatter: dateFormatter,
+    flex: 1,
+  },
+  {
+    field: 'pauses',
+    headerName: 'Паузы',
+    renderCell: ({ value }) => (
+      <div style={{ padding: '0.5rem 0' }}>
+        {value.map((pause: Pause, index: number) => (
+          <div key={index}>
+            {!!pause?.dateFrom && `с ${new Date(pause?.dateFrom).toLocaleTimeString()}`}
+            {!!pause?.dateTo && ` до ${new Date(pause?.dateTo).toLocaleTimeString()}`}
+          </div>
+        ))}
+      </div>
+    ),
     flex: 1,
   },
   {
@@ -233,7 +278,8 @@ export const HistoryDialog = observer(() => {
           flex: 1;
         `}
       >
-        <DataGrid
+        <StyledDataGrid
+          disableVirtualization
           rows={toJS(query.data) ?? []}
           columns={COLUMNS}
           pageSize={30}
