@@ -80,7 +80,7 @@ const Root = styled(ButtonBase)<{ state?: ClientState }>`
   width: 100%;
   height: 100%;
   flex-direction: column;
-  text-shadow: 1px 1px 1px #565656;
+  text-shadow: 0.1em 0.1em 0.1em #565656;
   font-size: 1em;
   ${({ state }) => (state !== undefined ? stateStyles[state] : null)}
 `;
