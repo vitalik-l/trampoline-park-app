@@ -9,6 +9,7 @@ import IconButton from '@mui/material/IconButton';
 import AddCircleOutlined from '@mui/icons-material/AddCircleOutlined';
 import ListAlt from '@mui/icons-material/ListAlt';
 import { HistoryDialog } from './HistoryDialog';
+import Box from '@mui/material/Box';
 
 export const App = observer(() => {
   const store = useStore();
@@ -23,7 +24,8 @@ export const App = observer(() => {
     >
       <div
         css={css`
-          min-height: 80px;
+          font-size: min(calc(10 * 1vw * 100 / 1920), calc(10 * 1vh * 100 / 1080));
+          min-height: 8em;
           position: sticky;
           top: 0;
           left: 0;
@@ -48,9 +50,7 @@ export const App = observer(() => {
               flex: 1;
             `}
           />
-          <Typography sx={{ typography: { sm: 'h4', xs: 'h5' } }}>
-            {store.currentTime.value.toLocaleString()}
-          </Typography>
+          <Box sx={{ fontSize: '4em' }}>{store.currentTime.value.toLocaleString()}</Box>
           <div
             css={css`
               flex: 1;

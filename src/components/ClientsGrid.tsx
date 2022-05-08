@@ -9,9 +9,12 @@ export const ClientsGrid = (props: React.HTMLAttributes<HTMLDivElement>) => {
     <div
       css={css`
         display: grid;
-        grid-template: repeat(auto-fill, minmax(176px, 1fr)) / repeat(auto-fill, minmax(160px, 1fr));
-        grid-gap: 1rem;
-        padding: 1rem;
+        justify-content: center;
+        //grid-template: repeat(auto-fill, minmax(176px, 1fr)) / repeat(auto-fill, minmax(160px, 1fr));
+        grid-template: repeat(5, 18.8em) / repeat(10, 18em);
+        grid-gap: 1em;
+        padding: 1em;
+        font-size: min(calc(10 * 1vw * 100 / 1920), calc(10 * 1vh * 100 / 1080));
       `}
       {...props}
     >

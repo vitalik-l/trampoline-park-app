@@ -30,10 +30,10 @@ const endAnimation = keyframes`
 `;
 
 const Header = styled.div`
-  height: 35px;
+  height: 3.8em;
   display: flex;
   align-items: center;
-  padding: 5px 0;
+  padding: 0.2em 0;
   width: 100%;
   justify-content: center;
 `;
@@ -81,6 +81,7 @@ const Root = styled(ButtonBase)<{ state?: ClientState }>`
   height: 100%;
   flex-direction: column;
   text-shadow: 1px 1px 1px #565656;
+  font-size: 1em;
   ${({ state }) => (state !== undefined ? stateStyles[state] : null)}
 `;
 
@@ -161,7 +162,9 @@ export const Client = observer(({ number }: Props) => {
             ${!!client?.name ? 'border-bottom: 1px solid #ffffff94;' : ''}
           `}
         >
-          <Typography variant="h6">{client?.name}</Typography>
+          <Typography variant="h6" sx={{ fontSize: '2.2em' }}>
+            {client?.name}
+          </Typography>
         </Header>
         <div
           css={css`
@@ -187,17 +190,17 @@ export const Client = observer(({ number }: Props) => {
                 align-items: center;
                 flex: 1;
                 width: 100%;
-                padding-top: 10px;
-                padding-right: 0.5rem;
+                padding-top: 1em;
+                padding-right: 0.1em;
                 box-sizing: border-box;
               `}
             >
               <div
                 css={css`
-                  width: 65px;
+                  width: 7em;
                 `}
               >
-                <Typography variant="h4" style={{ fontSize: '2.8rem' }}>
+                <Typography variant="h4" sx={{ fontSize: '5em' }}>
                   {number}
                 </Typography>
               </div>
@@ -212,10 +215,10 @@ export const Client = observer(({ number }: Props) => {
                 <div
                   css={css`
                     font-weight: 400;
-                    font-size: 1.3rem;
+                    font-size: 2.4em;
                     display: flex;
                     flex-direction: column;
-                    grid-gap: 0.2rem;
+                    grid-gap: 0.1em;
                   `}
                 >
                   <div>{client?.timeStart?.toLocaleTimeString()}</div>
@@ -225,14 +228,13 @@ export const Client = observer(({ number }: Props) => {
             </div>
             <div
               css={css`
-                height: 50px;
                 display: flex;
                 align-items: center;
-                padding: 5px 0;
+                padding: 1em 0;
                 justify-content: center;
               `}
             >
-              <Typography variant="h5" style={{ fontSize: '1.8rem' }}>
+              <Typography variant="h5" style={{ fontSize: '3.8em' }}>
                 {client ? formatTime(client?.timeLeft) : ''}
               </Typography>
             </div>

@@ -93,7 +93,7 @@ export class ClientStore {
   }
 
   get timeStart() {
-    return this.startedAt ?? this.currentTime.value;
+    return this.startedAt ?? this.createdAt;
   }
 
   get timeLeft() {

@@ -152,15 +152,17 @@ const dateFormatter = (params: any) =>
   params.value ? new Date(params.value).toLocaleString() : null;
 
 const COLUMNS: GridColDef[] = [
-  { field: 'id', headerName: 'ID', flex: 1 },
+  { field: 'id', headerName: 'ID', flex: 1, minWidth: 70 },
   {
     field: 'number',
     headerName: 'Номер',
     flex: 1,
+    minWidth: 120,
   },
   {
     field: 'name',
     headerName: 'Имя',
+    minWidth: 100,
     flex: 1,
   },
   {
@@ -172,12 +174,14 @@ const COLUMNS: GridColDef[] = [
   {
     field: 'createdAt',
     headerName: 'Создан',
+    minWidth: 200,
     valueFormatter: dateFormatter,
     flex: 1,
   },
   {
     field: 'startedAt',
     headerName: 'Старт',
+    minWidth: 200,
     valueFormatter: dateFormatter,
     flex: 1,
   },
@@ -200,6 +204,7 @@ const COLUMNS: GridColDef[] = [
   {
     field: 'stoppedAt',
     headerName: 'Удалён',
+    minWidth: 200,
     valueFormatter: dateFormatter,
     flex: 1,
   },
