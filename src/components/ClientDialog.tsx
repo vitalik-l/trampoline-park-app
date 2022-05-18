@@ -80,7 +80,7 @@ export const ClientDialog = observer(({ open }: { client?: ClientStore; open?: b
                     Старт
                   </Button>
                 )}
-                {client?.isStarted && (
+                {client?.isStarted && !client?.isFinished && (
                   <Button
                     variant="contained"
                     color="success"

@@ -130,7 +130,7 @@ export const Client = observer(({ number }: Props) => {
             Старт
           </MenuItem>
         )}
-        {client?.isStarted && (
+        {client?.isStarted && !client?.isFinished && (
           <MenuItem
             onClick={() => {
               client?.togglePause();
