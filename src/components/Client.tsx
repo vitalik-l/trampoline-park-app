@@ -233,6 +233,7 @@ export const Client = observer(({ number }: Props) => {
               display: flex;
               align-items: center;
               justify-content: center;
+              z-index: 1;
             `}
           >
             <Typography variant="h5" style={{ fontSize: '3.8em' }}>

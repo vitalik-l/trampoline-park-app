@@ -4,7 +4,6 @@ import { css } from '@emotion/react';
 import { ClientDialog } from './ClientDialog';
 import { observer } from 'mobx-react-lite';
 import { useStore } from './StoreProvider';
-import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import AddCircleOutlined from '@mui/icons-material/AddCircleOutlined';
 import ListAlt from '@mui/icons-material/ListAlt';
@@ -26,7 +25,7 @@ export const App = observer(() => {
       <div
         css={css`
           font-size: min(calc(10 * 1vw * 100 / 1920), calc(10 * 1vh * 100 / 1080));
-          min-height: 8em;
+          min-height: 9em;
           position: sticky;
           top: 0;
           left: 0;

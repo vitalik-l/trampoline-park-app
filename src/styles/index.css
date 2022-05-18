@@ -19,7 +19,7 @@ html, body, #root {
     font-size: min(1.5rem, 1.5em);
 }
 .MuiIconButton-root.MuiButtonBase-root {
-    font-size: min(1.5rem, 2em);
+    font-size: min(1.5rem, 2.5em);
     padding: 0.8em;
 }
 .memo-virtualScrollerContent-2 {
