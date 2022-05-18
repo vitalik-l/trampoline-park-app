@@ -10,6 +10,7 @@ import AddCircleOutlined from '@mui/icons-material/AddCircleOutlined';
 import ListAlt from '@mui/icons-material/ListAlt';
 import { HistoryDialog } from './HistoryDialog';
 import Box from '@mui/material/Box';
+import { Footer } from './Footer';
 
 export const App = observer(() => {
   const store = useStore();
@@ -75,6 +76,7 @@ export const App = observer(() => {
           overflow: auto;
         `}
       />
+      <Footer />
       <ClientDialog />
       <HistoryDialog />
     </div>

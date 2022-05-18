@@ -1,5 +1,5 @@
 html {
-    /*font-size: 10px;*/
+    font-size: 18px;
 }
 
 body {
@@ -14,4 +14,14 @@ body {
 
 html, body, #root {
     height: 100%;
+}
+.MuiIconButton-root.MuiButtonBase-root svg {
+    font-size: min(1.5rem, 1.5em);
+}
+.MuiIconButton-root.MuiButtonBase-root {
+    font-size: min(1.5rem, 2em);
+    padding: 0.8em;
+}
+.memo-virtualScrollerContent-2 {
+    overflow: initial !important;
 }

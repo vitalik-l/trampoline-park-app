@@ -182,6 +182,7 @@ export const Client = observer(({ number }: Props) => {
               flex-direction: column;
               width: 100%;
               z-index: 1;
+              flex: 1;
             `}
           >
             <div
@@ -226,18 +227,17 @@ export const Client = observer(({ number }: Props) => {
                 </div>
               </div>
             </div>
-            <div
-              css={css`
-                display: flex;
-                align-items: center;
-                padding: 1em 0;
-                justify-content: center;
-              `}
-            >
-              <Typography variant="h5" style={{ fontSize: '3.8em' }}>
-                {client ? formatTime(client?.timeLeft) : ''}
-              </Typography>
-            </div>
+          </div>
+          <div
+            css={css`
+              display: flex;
+              align-items: center;
+              justify-content: center;
+            `}
+          >
+            <Typography variant="h5" style={{ fontSize: '3.8em' }}>
+              {client ? formatTime(client?.timeLeft) : <>&nbsp;</>}
+            </Typography>
           </div>
           {client?.isStarted && !client?.isPaused && (
             <>
