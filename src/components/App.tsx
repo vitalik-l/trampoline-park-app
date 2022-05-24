@@ -50,7 +50,9 @@ export const App = observer(() => {
               flex: 1;
             `}
           />
-          <Box sx={{ fontSize: '4em' }}>{store.currentTime.value.toLocaleString()}</Box>
+          <Box sx={{ fontSize: '4em', fontWeight: 800 }}>
+            {store.currentTime.value.toLocaleString()}
+          </Box>
           <div
             css={css`
               flex: 1;
@@ -71,7 +73,7 @@ export const App = observer(() => {
       <ClientsGrid
         css={css`
           flex: 1;
-          background: #f2f5f8;
+          background: #292826;
           overflow: auto;
         `}
       />

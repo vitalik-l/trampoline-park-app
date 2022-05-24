@@ -8,7 +8,6 @@ import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import { green, red } from '@mui/material/colors';
 import styled from '@emotion/styled';
 import { ClientState } from '../store/ClientStore';
 
@@ -18,6 +17,7 @@ type Props = {
 
 const COLORS = {
   green: '#18df21',
+  red: '#ff4949',
 };
 
 const endAnimation = keyframes`
@@ -25,7 +25,7 @@ const endAnimation = keyframes`
     background: white;
   }
   to {
-    background: ${red[500]};
+    background: ${COLORS.red};
   }
 `;
 
@@ -51,7 +51,7 @@ const ContentBg = styled(ContentBgBase)`
 `;
 
 const ContentBgProgress = styled(ContentBgBase)`
-  background: ${red[500]};
+  background: ${COLORS.red};
   transition: transform 0.5s;
 `;
 
@@ -162,7 +162,19 @@ export const Client = observer(({ number }: Props) => {
             ${!!client?.name ? 'border-bottom: 1px solid #ffffff94;' : ''}
           `}
         >
-          <Typography variant="h6" sx={{ fontSize: '2.2em' }}>
+          <Typography
+            variant="h6"
+            sx={{
+              fontSize: '2.2em',
+              margin: 'auto',
+              overflow: 'hidden',
+              whiteSpace: 'nowrap',
+              textOverflow: 'ellipsis',
+              textShadow: 'none',
+              fontWeight: 800,
+              p: '0 0.5em',
+            }}
+          >
             {client?.name}
           </Typography>
         </Header>
@@ -192,7 +204,7 @@ export const Client = observer(({ number }: Props) => {
                 flex: 1;
                 width: 100%;
                 padding-top: 1em;
-                padding-right: 0.1em;
+                padding-right: 0.5em;
                 box-sizing: border-box;
               `}
             >
@@ -201,7 +213,7 @@ export const Client = observer(({ number }: Props) => {
                   width: 7em;
                 `}
               >
-                <Typography variant="h4" sx={{ fontSize: '5em' }}>
+                <Typography variant="h4" sx={{ fontSize: '5em', fontWeight: 800 }}>
                   {number}
                 </Typography>
               </div>
@@ -215,11 +227,12 @@ export const Client = observer(({ number }: Props) => {
               >
                 <div
                   css={css`
-                    font-weight: 400;
-                    font-size: 2.4em;
+                    font-weight: 700;
+                    font-size: 3em;
                     display: flex;
                     flex-direction: column;
                     grid-gap: 0.1em;
+                    text-shadow: none;
                   `}
                 >
                   <div>{client?.timeStart?.toLocaleTimeString()}</div>
