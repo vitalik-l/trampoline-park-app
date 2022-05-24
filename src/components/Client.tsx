@@ -213,7 +213,7 @@ export const Client = observer(({ number }: Props) => {
                   width: 7em;
                 `}
               >
-                <Typography variant="h4" sx={{ fontSize: '5em', fontWeight: 800 }}>
+                <Typography variant="h4" sx={{ fontSize: '4em', fontWeight: 800 }}>
                   {number}
                 </Typography>
               </div>
@@ -228,7 +228,7 @@ export const Client = observer(({ number }: Props) => {
                 <div
                   css={css`
                     font-weight: 800;
-                    font-size: 3em;
+                    font-size: 2.6em;
                     display: flex;
                     flex-direction: column;
                     grid-gap: 0.2em;
