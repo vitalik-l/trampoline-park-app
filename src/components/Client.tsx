@@ -227,12 +227,13 @@ export const Client = observer(({ number }: Props) => {
               >
                 <div
                   css={css`
-                    font-weight: 700;
+                    font-weight: 800;
                     font-size: 3em;
                     display: flex;
                     flex-direction: column;
-                    grid-gap: 0.1em;
+                    grid-gap: 0.2em;
                     text-shadow: none;
+                    line-height: 1;
                   `}
                 >
                   <div>{client?.timeStart?.toLocaleTimeString()}</div>
@@ -249,7 +250,7 @@ export const Client = observer(({ number }: Props) => {
               z-index: 1;
             `}
           >
-            <Typography variant="h5" style={{ fontSize: '3.8em' }}>
+            <Typography variant="h5" style={{ fontSize: '3.8em', lineHeight: 1, fontWeight: 800 }}>
               {client ? formatTime(client?.timeLeft) : <>&nbsp;</>}
             </Typography>
           </div>
