@@ -111,7 +111,7 @@ export const Client = observer(({ number }: Props) => {
   };
 
   return (
-    <Paper onContextMenu={handleContextMenu}>
+    <Paper onContextMenu={handleContextMenu} sx={{ borderRadius: 0 }}>
       <Menu
         anchorReference="anchorPosition"
         open={contextMenu !== null}
