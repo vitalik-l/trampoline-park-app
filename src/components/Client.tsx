@@ -167,12 +167,12 @@ export const Client = observer(({ number }: Props) => {
           <Typography
             variant="h6"
             sx={{
-              fontSize: '2.2em',
+              fontSize: '2.6em',
               margin: 'auto',
               overflow: 'hidden',
               lineHeight: '110%',
               textShadow: 'none',
-              fontWeight: 800,
+              fontWeight: 700,
               p: '0 0.5em',
               textTransform: 'uppercase',
             }}
