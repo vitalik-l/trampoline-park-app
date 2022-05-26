@@ -1,4 +1,4 @@
-export const formatTime = (seconds?: number) => {
+export const formatTime = (seconds?: number, short = false) => {
   if (!seconds) return '00:00:00';
   let hour = (seconds / 3600) ^ 0,
     min = ((seconds - hour * 3600) / 60) ^ 0,

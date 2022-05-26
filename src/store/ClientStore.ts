@@ -142,10 +142,10 @@ export class ClientStore {
 
   stop() {
     if (this.stoppedAt) return;
-    if (confirm('Удалить запись?')) {
-      this.stoppedAt = new Date();
-      this.saveToStorage().catch(console.error);
-    }
+    // if (confirm('Удалить запись?')) {
+    this.stoppedAt = new Date();
+    this.saveToStorage().catch(console.error);
+    // }
   }
 
   save(params: Partial<ClientConstructor>) {

@@ -30,12 +30,14 @@ const endAnimation = keyframes`
 `;
 
 const Header = styled.div`
-  height: 3.8em;
+  height: 5em;
   display: flex;
   align-items: center;
   padding: 0.2em 0;
   width: 100%;
   justify-content: center;
+  overflow: hidden;
+  word-break: break-all;
 `;
 
 const ContentBgBase = styled.div`
@@ -168,11 +170,11 @@ export const Client = observer(({ number }: Props) => {
               fontSize: '2.2em',
               margin: 'auto',
               overflow: 'hidden',
-              whiteSpace: 'nowrap',
-              textOverflow: 'ellipsis',
+              lineHeight: '110%',
               textShadow: 'none',
               fontWeight: 800,
               p: '0 0.5em',
+              textTransform: 'uppercase',
             }}
           >
             {client?.name}
@@ -203,7 +205,7 @@ export const Client = observer(({ number }: Props) => {
                 align-items: center;
                 flex: 1;
                 width: 100%;
-                padding-top: 1em;
+                //padding-top: 1em;
                 padding-right: 0.5em;
                 box-sizing: border-box;
               `}
@@ -211,9 +213,10 @@ export const Client = observer(({ number }: Props) => {
               <div
                 css={css`
                   width: 7em;
+                  color: blue;
                 `}
               >
-                <Typography variant="h4" sx={{ fontSize: '4em', fontWeight: 800 }}>
+                <Typography variant="h4" sx={{ fontSize: '4.5em', fontWeight: 800 }}>
                   {number}
                 </Typography>
               </div>
@@ -228,7 +231,7 @@ export const Client = observer(({ number }: Props) => {
                 <div
                   css={css`
                     font-weight: 800;
-                    font-size: 2.6em;
+                    font-size: 3em;
                     display: flex;
                     flex-direction: column;
                     grid-gap: 0.2em;
@@ -236,8 +239,15 @@ export const Client = observer(({ number }: Props) => {
                     line-height: 1;
                   `}
                 >
-                  <div>{client?.timeStart?.toLocaleTimeString()}</div>
-                  <div>{client?.timeEnd.toLocaleTimeString()}</div>
+                  <div>
+                    {client?.timeStart?.toLocaleTimeString([], {
+                      hour: '2-digit',
+                      minute: '2-digit',
+                    })}
+                  </div>
+                  <div>
+                    {client?.timeEnd.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                  </div>
                 </div>
               </div>
             </div>
