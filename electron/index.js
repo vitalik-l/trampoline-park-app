@@ -1,7 +1,7 @@
 const { app, BrowserWindow } = require('electron');
 const path = require('path');
 
-const indexHtmlPath = path.resolve('./dist/index.html');
+const indexHtmlPath = path.resolve(__dirname, '../dist/index.html');
 
 const createWindow = () => {
   const win = new BrowserWindow({
