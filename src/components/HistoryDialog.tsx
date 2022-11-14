@@ -251,21 +251,21 @@ const useQuery = (queryFn: () => PromiseLike<any>) => {
 
 export const HistoryDialog = observer(() => {
   const store = useStore();
-  const open = store.isHistoryOpen;
+  const isOpen = store.historyDialog.isOpen;
   const query = useQuery(() => db.clients.toArray());
 
   React.useEffect(() => {
-    if (open) {
+    if (isOpen) {
       query.fetch();
     }
-  }, [open, query]);
+  }, [isOpen, query]);
 
   const onClose = () => {
-    store.setOpenHistory(false);
+    store.historyDialog.toggle(false);
   };
 
   return (
-    <Dialog fullScreen onClose={onClose} TransitionComponent={Transition} open={open}>
+    <Dialog fullScreen onClose={onClose} TransitionComponent={Transition} open={isOpen}>
       <AppBar sx={{ position: 'relative' }}>
         <Toolbar>
           <IconButton edge="start" color="inherit" onClick={onClose} aria-label="close">

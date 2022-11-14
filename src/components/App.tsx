@@ -61,10 +61,10 @@ export const App = observer(() => {
               margin-left: 1rem;
             `}
           >
-            <IconButton onClick={() => store.setOpenHistory(true)}>
+            <IconButton onClick={() => store.historyDialog.toggle(true)}>
               <ListAlt />
             </IconButton>
-            <IconButton onClick={() => store.openClientDialog()}>
+            <IconButton onClick={() => store.clientDialog.open()}>
               <AddCircleOutlined />
             </IconButton>
           </div>

@@ -10,14 +10,13 @@ import Button from '@mui/material/Button';
 import DialogContent from '@mui/material/DialogContent';
 import { TextField } from 'mui-rff';
 import { css } from '@emotion/react';
-import { experimental_sx as sx } from '@mui/material/styles';
 
 export const ClientDialog = observer(({ open }: { client?: ClientStore; open?: boolean }) => {
   const store = useStore();
-  const number = store.clientNumberDialog;
+  const number = store.clientDialog.clientNumber;
   const client = number ? store.clients.get(number) : undefined;
 
-  const onClose = () => store.closeClientDialog();
+  const onClose = () => store.clientDialog.close();
 
   const onSubmit = (values: { name: string; number: string; limit: string; comment?: string }) => {
     const params = {

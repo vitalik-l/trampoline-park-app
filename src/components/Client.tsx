@@ -156,7 +156,7 @@ export const Client = observer(({ number }: Props) => {
       <Root
         state={client?.state}
         onClick={() => {
-          store.openClientDialog(number);
+          store.clientDialog.open(number);
         }}
       >
         <Header

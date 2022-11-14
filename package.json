@@ -4,7 +4,8 @@
   "version": "0.0.0",
   "main": "./electron/index.js",
   "author": "Logvinenko Vitaly",
-  "description": "Monkey app",
+  "type": "module",
+  "description": "The app to manage clients in the trampoline park",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
